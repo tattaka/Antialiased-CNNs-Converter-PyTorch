@@ -18,18 +18,18 @@ __all__ = [
 ]
 
 class BatchNorm2D_ReLU(nn.Module):
-    def __init__(self, num_features, inplace=True):
+    def __init__(self, bn, inplace=True):
         super(BatchNorm2D_ReLU, self).__init__()
-        self.bn = nn.BatchNorm2d(num_features)
+        self.bn = bn
         self.relu = nn.ReLU(inplace=inplace)
     def forward(self, input):
         return self.relu(self.bn(input))
     
     
 class BatchNorm1D_ReLU(nn.Module):
-    def __init__(self, num_features, inplace=True):
+    def __init__(self, bn, inplace=True):
         super(BatchNorm1D_ReLU, self).__init__()
-        self.bn = nn.BatchNorm1d(num_features)
+        self.bn = bn
         self.relu = nn.ReLU(inplace=inplace)
     def forward(self, input):
         return self.relu(self.bn(input))
@@ -78,7 +78,7 @@ def convert_model(module, filt_size=3):
     elif isinstance(module, nn.MaxPool2d):
         mod = MaxPool2D_Downsample(filt_size=filt_size, kernel_size=module.kernel_size, stride=module.stride)
     elif isinstance(module, nn.modules.batchnorm.BatchNorm2d):
-        mod = BatchNorm2D_ReLU(module.num_features)
+        mod = BatchNorm2D_ReLU(module)
     for name, child in module.named_children():
         mod.add_module(name, convert_model(child, filt_size=filt_size))
     return mod
