@@ -18,7 +18,7 @@ __all__ = [
 ]
 
 class BatchNorm2D_ReLU(nn.Module):
-    def __init__(self, bn, inplace=True):
+    def __init__(self, bn, inplace=False):
         super(BatchNorm2D_ReLU, self).__init__()
         self.bn = bn
         self.relu = nn.ReLU(inplace=inplace)
@@ -27,7 +27,7 @@ class BatchNorm2D_ReLU(nn.Module):
     
     
 class BatchNorm1D_ReLU(nn.Module):
-    def __init__(self, bn, inplace=True):
+    def __init__(self, bn, inplace=False):
         super(BatchNorm1D_ReLU, self).__init__()
         self.bn = bn
         self.relu = nn.ReLU(inplace=inplace)
